@@ -1,4 +1,4 @@
-﻿namespace NS.Identidade.API.Models;
+﻿namespace NS.WebApp.MVC.Models;
 
 public class UsuarioToken
 {

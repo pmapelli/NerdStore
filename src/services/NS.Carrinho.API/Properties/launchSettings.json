@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "NSE.Carrinho.API": {
+    "NS.Carrinho.API": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
