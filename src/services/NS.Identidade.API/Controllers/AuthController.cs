@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace NS.Identidade.API.Controllers;
 
+[ApiController]
 [Route("api/identidade")]
 public class AuthController : Controller
 {
@@ -18,9 +19,7 @@ public class AuthController : Controller
     }
 
     [HttpPost("nova-conta")]
-    public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro,
-                                                UserManager<IdentityUser> userManager,
-                                                SignInManager<IdentityUser> signInManager)
+    public async Task<ActionResult> Registrar(UsuarioRegistro usuarioRegistro)
     {
         if (!ModelState.IsValid) return BadRequest();
 

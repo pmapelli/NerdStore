@@ -1,6 +1,7 @@
 using NS.Identidade.API.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,17 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Title = "NerdStore Identity API",
+        Description = "Esta API faz parte do curso ASP.NET Core Enterprise Applications.",
+        Contact = new OpenApiContact() { Name = "Pedro Mapelli", Email = "pmapelli@hotmail.com" },
+        License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
+    });
+
+});
 
 var app = builder.Build();
 
@@ -24,7 +35,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    });
 }
 
 app.UseHttpsRedirection();
