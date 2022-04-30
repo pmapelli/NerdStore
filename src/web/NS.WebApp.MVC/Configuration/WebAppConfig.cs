@@ -31,6 +31,8 @@ public static class WebAppConfig
 
         app.UseIdentityConfiguration();
 
+        app.UseMiddleware<ExceptionMiddleware>();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllerRoute(

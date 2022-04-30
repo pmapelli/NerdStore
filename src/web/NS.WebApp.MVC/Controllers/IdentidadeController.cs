@@ -39,7 +39,7 @@ public class IdentidadeController : IdentidadeControllerBase
 
     [HttpGet]
     [Route("login")]
-    public IActionResult Login(string returnUrl = null)
+    public IActionResult Login(string? returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
         return View();
@@ -47,7 +47,7 @@ public class IdentidadeController : IdentidadeControllerBase
 
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> Login(UsuarioLogin usuarioLogin, string returnUrl = null)
+    public async Task<IActionResult> Login(UsuarioLogin usuarioLogin, string? returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
         if (!ModelState.IsValid) return View(usuarioLogin);
