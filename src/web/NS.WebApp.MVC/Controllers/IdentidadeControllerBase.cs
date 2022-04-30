@@ -1,13 +1,12 @@
 ﻿using NS.WebApp.MVC.Models;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace NS.WebApp.MVC.Controllers;
 
-public class IdentidadeControllerBase : Controller
+public class IdentidadeControllerBase : MainController
 {
     protected async Task RealizarLogin(UsuarioRespostaLogin resposta)
     {

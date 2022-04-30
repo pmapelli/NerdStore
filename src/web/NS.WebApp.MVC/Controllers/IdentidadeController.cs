@@ -30,9 +30,11 @@ public class IdentidadeController : IdentidadeControllerBase
 
         var resposta = await _autenticacaoService.Registro(usuarioRegistro);
 
+        if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
+
         await RealizarLogin(resposta);
 
-        return View();
+        return RedirectToAction("Index", "Home");
     }
 
     [HttpGet]
@@ -40,7 +42,6 @@ public class IdentidadeController : IdentidadeControllerBase
     public IActionResult Login(string returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
-
         return View();
     }
 
@@ -53,9 +54,13 @@ public class IdentidadeController : IdentidadeControllerBase
 
         var resposta = await _autenticacaoService.Login(usuarioLogin);
 
+        if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioLogin);
+
         await RealizarLogin(resposta);
 
-        return View();
+        if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Home");
+
+        return LocalRedirect(returnUrl);
     }
 
     [HttpGet]

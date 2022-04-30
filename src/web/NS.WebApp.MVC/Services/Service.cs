@@ -21,7 +21,7 @@ public abstract class Service
             PropertyNameCaseInsensitive = true
         };
 
-        return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options);
+        return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options)!;
     }
 
     protected bool TratarErrosResponse(HttpResponseMessage response)
