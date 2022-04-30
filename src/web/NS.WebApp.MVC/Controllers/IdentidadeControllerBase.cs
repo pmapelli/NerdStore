@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace NS.WebApp.MVC.Controllers;
 
-public class IdentidadeControllerBase : MainController
+public class IdentidadeControllerBase : ControllerBase
 {
     protected async Task RealizarLogin(UsuarioRespostaLogin resposta)
     {

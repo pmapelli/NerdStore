@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace NS.WebApp.MVC.Controllers;
 
-public class MainController : Controller
+public class ControllerBase : Controller
 {
     protected bool ResponsePossuiErros(ResponseResult? resposta)
     {
