@@ -7,6 +7,8 @@ builder.Services.AddMvcConfiguration(builder.Configuration);
 
 builder.Services.AddIdentityConfiguration();
 
+builder.Services.RegisterServices();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
