@@ -1,12 +1,12 @@
 ﻿using NS.WebApp.MVC.Models;
+using NS.WebApp.MVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using NS.WebApp.MVC.Services;
 
 namespace NS.WebApp.MVC.Controllers;
 
-public class IdentidadeController : Controller
+public class IdentidadeController : IdentidadeControllerBase
 {
     private readonly IAutenticacaoService _autenticacaoService;
 
@@ -30,6 +30,8 @@ public class IdentidadeController : Controller
 
         var resposta = await _autenticacaoService.Registro(usuarioRegistro);
 
+        await RealizarLogin(resposta);
+
         return View();
     }
 
@@ -50,6 +52,8 @@ public class IdentidadeController : Controller
         if (!ModelState.IsValid) return View(usuarioLogin);
 
         var resposta = await _autenticacaoService.Login(usuarioLogin);
+
+        await RealizarLogin(resposta);
 
         return View();
     }
