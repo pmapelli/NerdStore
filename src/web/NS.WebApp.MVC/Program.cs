@@ -1,7 +1,11 @@
+using NS.WebApp.MVC.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddMvcConfiguration(builder.Configuration);
+
+builder.Services.AddIdentityConfiguration();
 
 var app = builder.Build();
 
@@ -18,7 +22,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseMvcConfiguration(app.Environment);
 
 app.MapControllerRoute(
     name: "default",
