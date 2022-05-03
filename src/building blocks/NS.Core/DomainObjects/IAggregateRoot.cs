@@ -1,4 +1,3 @@
-﻿namespace NS.Core.DomainObjects
-{
-    public interface IAggregateRoot { }
-}
+﻿namespace NS.Core.DomainObjects;
+
+public interface IAggregateRoot { }

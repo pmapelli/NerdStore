@@ -2,7 +2,7 @@ using NS.Identidade.API.Data;
 using Microsoft.EntityFrameworkCore;
 using NS.Identidade.API.Configuration;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -14,7 +14,7 @@ builder.Services.AddApiConfiguration();
 
 builder.Services.AddSwaggerConfiguration();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.UseSwaggerConfiguration();
 
