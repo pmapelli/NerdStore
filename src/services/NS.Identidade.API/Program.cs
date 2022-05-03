@@ -20,12 +20,6 @@ app.UseSwaggerConfiguration();
 
 app.UseApiConfiguration(app.Environment);
 
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

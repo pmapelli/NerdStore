@@ -12,8 +12,8 @@ using NS.Identidade.API.Data;
 namespace NS.Identidade.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220430161405_Initial")]
-    partial class Initial
+    [Migration("20220503100743_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

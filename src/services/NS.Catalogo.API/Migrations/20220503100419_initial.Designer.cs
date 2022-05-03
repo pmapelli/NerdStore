@@ -12,7 +12,7 @@ using NS.Catalogo.API.Data;
 namespace NS.Catalogo.API.Migrations
 {
     [DbContext(typeof(CatalogoContext))]
-    [Migration("20220503094358_initial")]
+    [Migration("20220503100419_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
