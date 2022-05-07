@@ -10,7 +10,7 @@ public class IdentidadeControllerBase : ControllerBase
 {
     protected async Task RealizarLogin(UsuarioRespostaLogin resposta)
     {
-        var token = ObterTokenFormatado(resposta.AccessToken);
+        JwtSecurityToken? token = ObterTokenFormatado(resposta.AccessToken);
 
         var claims = new List<Claim> {new("JWT", resposta.AccessToken)};
         claims.AddRange(token?.Claims ?? Array.Empty<Claim>());

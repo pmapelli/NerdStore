@@ -70,7 +70,7 @@ public static class ClaimsPrincipalExtensions
             throw new ArgumentException(nameof(principal));
         }
 
-        var claim = principal.FindFirst("sub");
+        Claim? claim = principal.FindFirst("sub");
         return claim?.Value;
     }
 
@@ -81,7 +81,7 @@ public static class ClaimsPrincipalExtensions
             throw new ArgumentException(nameof(principal));
         }
 
-        var claim = principal.FindFirst("email");
+        Claim? claim = principal.FindFirst("email");
         return claim?.Value;
     }
 
@@ -92,7 +92,7 @@ public static class ClaimsPrincipalExtensions
             throw new ArgumentException(nameof(principal));
         }
 
-        var claim = principal.FindFirst("JWT");
+        Claim? claim = principal.FindFirst("JWT");
         return claim?.Value;
     }
 }

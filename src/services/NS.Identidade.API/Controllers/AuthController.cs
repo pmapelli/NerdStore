@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NS.Identidade.API.Models;
+using NS.WebAPI.CORE.Identidade;
 using Microsoft.Extensions.Options;
-using NS.Identidade.API.Extensions;
 using Microsoft.AspNetCore.Identity;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace NS.Identidade.API.Controllers;
 
@@ -33,14 +34,14 @@ public class AuthController : AuthControllerBase
             EmailConfirmed = true
         };
 
-        var result = await _userManager.CreateAsync(user, usuarioRegistro.Senha);
+        IdentityResult? result = await _userManager.CreateAsync(user, usuarioRegistro.Senha);
 
         if (result.Succeeded)
         {
             return CustomResponse(await GerarJwt(usuarioRegistro.Email));
         }
 
-        foreach (var error in result.Errors)
+        foreach (IdentityError? error in result.Errors)
         {
             AdicionarErroProcessamento(error.Description);
         }
@@ -53,7 +54,7 @@ public class AuthController : AuthControllerBase
     {
         if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-        var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha,
+        SignInResult? result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha,
             false, true);
 
         if (result.Succeeded)

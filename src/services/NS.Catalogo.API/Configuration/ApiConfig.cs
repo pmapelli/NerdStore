@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NS.Catalogo.API.Data;
+using NS.WebAPI.CORE.Identidade;
 
 namespace NS.Catalogo.API.Configuration;
 
@@ -35,5 +36,7 @@ public static class ApiConfig
         app.UseRouting();
 
         app.UseCors("Total");
+
+        app.UseAuthConfiguration();
     }
 }

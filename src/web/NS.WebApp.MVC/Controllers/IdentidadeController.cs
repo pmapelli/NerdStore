@@ -28,7 +28,7 @@ public class IdentidadeController : IdentidadeControllerBase
     {
         if (!ModelState.IsValid) return View(usuarioRegistro);
 
-        var resposta = await _autenticacaoService.Registro(usuarioRegistro);
+        UsuarioRespostaLogin? resposta = await _autenticacaoService.Registro(usuarioRegistro);
 
         if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
 
@@ -52,7 +52,7 @@ public class IdentidadeController : IdentidadeControllerBase
         ViewData["ReturnUrl"] = returnUrl;
         if (!ModelState.IsValid) return View(usuarioLogin);
 
-        var resposta = await _autenticacaoService.Login(usuarioLogin);
+        UsuarioRespostaLogin? resposta = await _autenticacaoService.Login(usuarioLogin);
 
         if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioLogin);
 

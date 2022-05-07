@@ -1,4 +1,5 @@
 using NS.Catalogo.API.Data;
+using NS.WebAPI.CORE.Identidade;
 using Microsoft.EntityFrameworkCore;
 using NS.Catalogo.API.Configuration;
 
@@ -10,6 +11,8 @@ builder.Services.AddDbContext<CatalogoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddApiConfiguration(builder.Configuration);
+
+builder.Services.AddJwtConfiguration(builder.Configuration);
 
 builder.Services.AddSwaggerConfiguration();
 
@@ -23,8 +26,6 @@ WebApplication app = builder.Build();
 app.UseSwaggerConfiguration();
 
 app.UseApiConfiguration(app.Environment);
-
-app.UseAuthorization();
 
 app.MapControllers();
 

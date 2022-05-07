@@ -18,9 +18,9 @@ public class AutenticacaoService : Service, IAutenticacaoService
 
     public async Task<UsuarioRespostaLogin> Login(UsuarioLogin usuarioLogin)
     {
-        var loginContent = ObterConteudo(usuarioLogin);
+        StringContent? loginContent = ObterConteudo(usuarioLogin);
 
-        var response = await _httpClient.PostAsync("/api/identidade/autenticar", loginContent);
+        HttpResponseMessage? response = await _httpClient.PostAsync("/api/identidade/autenticar", loginContent);
 
         if (!TratarErrosResponse(response))
         {
@@ -35,9 +35,9 @@ public class AutenticacaoService : Service, IAutenticacaoService
 
     public async Task<UsuarioRespostaLogin> Registro(UsuarioRegistro usuarioRegistro)
     {
-        var registroContent = ObterConteudo(usuarioRegistro);
+        StringContent? registroContent = ObterConteudo(usuarioRegistro);
 
-        var response = await _httpClient.PostAsync("/api/identidade/nova-conta", registroContent);
+        HttpResponseMessage? response = await _httpClient.PostAsync("/api/identidade/nova-conta", registroContent);
 
         if (!TratarErrosResponse(response))
         {

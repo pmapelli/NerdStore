@@ -1,4 +1,6 @@
-﻿namespace NS.Identidade.API.Configuration;
+﻿using NS.WebAPI.CORE.Identidade;
+
+namespace NS.Identidade.API.Configuration;
 
 public static class ApiConfig
 {
@@ -13,7 +15,7 @@ public static class ApiConfig
     {
         app.UseHttpsRedirection();
 
-        app.UseIdentityConfiguration();
+        app.UseAuthConfiguration();
 
         return app;
     }

@@ -1,8 +1,8 @@
 ﻿using System.Text;
 using System.Security.Claims;
 using NS.Identidade.API.Models;
+using NS.WebAPI.CORE.Identidade;
 using Microsoft.Extensions.Options;
-using NS.Identidade.API.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -23,10 +23,10 @@ public abstract class AuthControllerBase : ControllerBase
 
     protected async Task<UsuarioRespostaLogin> GerarJwt(string email)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+        IdentityUser? user = await _userManager.FindByEmailAsync(email);
         var claims = await _userManager.GetClaimsAsync(user);
 
-        var identityClaims = await ObterClaimsUsuario(claims, user);
+        ClaimsIdentity identityClaims = await ObterClaimsUsuario(claims, user);
         var encodedToken = CodificarToken(identityClaims);
 
         return ObterRespostaToken(encodedToken, user, claims);
@@ -56,7 +56,7 @@ public abstract class AuthControllerBase : ControllerBase
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-        var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
+        SecurityToken? token = tokenHandler.CreateToken(new SecurityTokenDescriptor
         {
             Issuer = _appSettings.Emissor,
             Audience = _appSettings.ValidoEm,

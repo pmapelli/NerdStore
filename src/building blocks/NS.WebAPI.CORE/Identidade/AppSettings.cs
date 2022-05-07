@@ -1,4 +1,4 @@
-﻿namespace NS.Identidade.API.Extensions;
+﻿namespace NS.WebAPI.CORE.Identidade;
 
 public class AppSettings
 {

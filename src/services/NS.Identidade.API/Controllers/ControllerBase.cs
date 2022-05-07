@@ -24,7 +24,7 @@ public abstract class ControllerBase : Controller
     protected ActionResult CustomResponse(ModelStateDictionary modelState)
     {
         var erros = modelState.Values.SelectMany(e => e.Errors);
-        foreach (var erro in erros)
+        foreach (ModelError? erro in erros)
         {
             AdicionarErroProcessamento(erro.ErrorMessage);
         }

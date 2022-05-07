@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\building blocks\NS.Core\NS.Core.csproj" />
+    <ProjectReference Include="..\..\building blocks\NS.WebAPI.CORE\NS.WebAPI.CORE.csproj" />
   </ItemGroup>
 
   <ItemGroup>

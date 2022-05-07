@@ -33,4 +33,8 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\NS.WebAPI.CORE\NS.WebAPI.CORE.csproj" />
+  </ItemGroup>
+
 </Project>
