@@ -28,6 +28,6 @@ app.UseMvcConfiguration(app.Environment);
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Catalogo}/{action=Index}/{id?}");
 
 app.Run();
