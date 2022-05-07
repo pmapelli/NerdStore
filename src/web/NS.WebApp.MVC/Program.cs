@@ -1,6 +1,6 @@
 using NS.WebApp.MVC.Configuration;
 
-WebApplicationBuilder? builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddMvcConfiguration(builder.Configuration);
@@ -9,7 +9,7 @@ builder.Services.AddIdentityConfiguration();
 
 builder.Services.RegisterServices();
 
-WebApplication? app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -26,8 +26,6 @@ app.UseRouting();
 
 app.UseMvcConfiguration(app.Environment);
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Catalogo}/{action=Index}/{id?}");
+app.MapControllerRoute("default", "{controller=Catalogo}/{action=Index}/{id?}");
 
 app.Run();
