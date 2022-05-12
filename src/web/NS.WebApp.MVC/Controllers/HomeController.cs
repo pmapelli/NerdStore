@@ -5,21 +5,17 @@ namespace NS.WebApp.MVC.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    [Route("sistema-indisponivel")]
+    public IActionResult SistemaIndisponivel()
     {
-        _logger = logger;
-    }
+        var modelErro = new ErrorViewModel
+        {
+            Mensagem = "O sistema está temporariamente indisponível, isto pode ocorrer em momentos de sobrecarga de usuários.",
+            Titulo = "Sistema indisponível.",
+            ErroCode = 500
+        };
 
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
+        return View("Error", modelErro);
     }
 
     [Route("erro/{id:length(3,3):int}")]

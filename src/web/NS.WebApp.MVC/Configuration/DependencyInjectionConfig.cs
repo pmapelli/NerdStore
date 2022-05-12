@@ -1,4 +1,5 @@
-﻿using NS.WebApp.MVC.Services;
+﻿using Polly;
+using NS.WebApp.MVC.Services;
 using NS.WebApp.MVC.Extensions;
 using NS.WebApp.MVC.Services.Handlers;
 
@@ -12,7 +13,12 @@ public static class DependencyInjectionConfig
         services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
 
         services.AddHttpClient<ICatalogoService, CatalogoService>()
-            .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+            .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+            //.AddTransientHttpErrorPolicy(
+            //p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(600)));
+            .AddPolicyHandler(PollyExtensions.EsperarTentar())
+            .AddTransientHttpErrorPolicy(
+                p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
         //services.AddHttpClient("Refit",
         //        options =>
