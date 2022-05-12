@@ -1,4 +1,6 @@
-﻿using NS.WebApp.MVC.Extensions;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using NS.WebApp.MVC.Extensions;
 
 namespace NS.WebApp.MVC.Configuration;
 
@@ -30,6 +32,14 @@ public static class WebAppConfig
         app.UseRouting();
 
         app.UseIdentityConfiguration();
+
+        var supportedCultures = new[] { new CultureInfo("pt-BR") };
+        app.UseRequestLocalization(new RequestLocalizationOptions
+        {
+            DefaultRequestCulture = new RequestCulture("pt-BR"),
+            SupportedCultures = supportedCultures,
+            SupportedUICultures = supportedCultures
+        });
 
         app.UseMiddleware<ExceptionMiddleware>();
 
