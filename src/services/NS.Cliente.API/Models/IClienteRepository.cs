@@ -1,6 +1,6 @@
 ﻿using NS.Core.Data;
 
-namespace NS.Cliente.API.Models;
+namespace NS.Clientes.API.Models;
 
 public interface IClienteRepository : IRepository<Cliente>
 {

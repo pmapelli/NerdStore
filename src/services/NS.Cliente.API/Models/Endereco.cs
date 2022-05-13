@@ -1,6 +1,6 @@
 ﻿using NS.Core.DomainObjects;
 
-namespace NS.Cliente.API.Models;
+namespace NS.Clientes.API.Models;
 
 public class Endereco : Entity
 {

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 using NS.WebApp.MVC.Extensions;
+using Microsoft.AspNetCore.Localization;
 
 namespace NS.WebApp.MVC.Configuration;
 
@@ -42,12 +42,5 @@ public static class WebAppConfig
         });
 
         app.UseMiddleware<ExceptionMiddleware>();
-
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-        });
     }
 }
