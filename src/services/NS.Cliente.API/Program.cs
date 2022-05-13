@@ -1,5 +1,6 @@
-using NS.Clientes.API.Configuration;
+using MediatR;
 using NS.WebAPI.CORE.Identidade;
+using NS.Clientes.API.Configuration;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApiConfiguration(builder.Configuration);
 builder.Services.AddJwtConfiguration(builder.Configuration);
 builder.Services.AddSwaggerConfiguration();
+builder.Services.AddMediatR(typeof(Program));
 builder.Services.RegisterServices();
 
 builder.Services.AddControllers();

@@ -20,7 +20,7 @@ namespace NS.Clientes.API.Data.Repository
             return await _context.Clientes.AsNoTracking().ToListAsync();
         }
 
-        public Task<Cliente> ObterPorCpf(string cpf)
+        public Task<Cliente?> ObterPorCpf(string cpf)
         {
             return _context.Clientes.FirstOrDefaultAsync(c => c.Cpf.Numero == cpf);
         }
