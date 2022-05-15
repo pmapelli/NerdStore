@@ -22,7 +22,7 @@ public class HttpClientAuthorizationDelegatingHandler : DelegatingHandler
             request.Headers.Add("Authorization", new List<string> { authorizationHeader });
         }
 
-        var token = _user.ObterUserToken();
+        string? token = _user.ObterUserToken();
 
         if (!string.IsNullOrWhiteSpace(token))
         {

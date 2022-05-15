@@ -2,6 +2,7 @@
 using NS.WebApp.MVC.Services;
 using NS.WebApp.MVC.Extensions;
 using NS.WebApp.MVC.Services.Handlers;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 
 namespace NS.WebApp.MVC.Configuration;
 
@@ -9,6 +10,8 @@ public static class DependencyInjectionConfig
 {
     public static void RegisterServices(this IServiceCollection services)
     {
+        services.AddSingleton<IValidationAttributeAdapterProvider, CpfValidationAttributeAdapterProvider>();
+
         services.AddTransient<HttpClientAuthorizationDelegatingHandler>();
         services.AddHttpClient<IAutenticacaoService, AutenticacaoService>();
 

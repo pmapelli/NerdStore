@@ -4,10 +4,10 @@ namespace NS.Clientes.API.Models;
 
 public class Cliente : Entity, IAggregateRoot
 {
-    public string Nome { get; private set; }
+    public string Nome { get; }
     public Email Email { get; private set; }
-    public Cpf Cpf { get; private set; }
-    public bool Excluido { get; private set; }
+    public Cpf Cpf { get; }
+    public bool Excluido { get; }
     public Endereco Endereco { get; private set; }
 
     // EF Relation

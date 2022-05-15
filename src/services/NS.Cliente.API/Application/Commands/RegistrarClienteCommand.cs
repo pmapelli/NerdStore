@@ -5,10 +5,10 @@ namespace NS.Clientes.API.Application.Commands;
 
 public class RegistrarClienteCommand : Command
 {
-    public Guid Id { get; private set; }
-    public string Nome { get; private set; }
-    public string Email { get; private set; }
-    public string Cpf { get; private set; }
+    public Guid Id { get; }
+    public string Nome { get; }
+    public string Email { get; }
+    public string Cpf { get; }
 
     public RegistrarClienteCommand(Guid id, string nome, string email, string cpf)
     {

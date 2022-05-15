@@ -9,7 +9,7 @@ public class ControllerBase : Controller
     {
         if (resposta == null || !resposta.Errors.Mensagens.Any()) return false;
 
-        foreach (var mensagem in resposta.Errors.Mensagens)
+        foreach (string? mensagem in resposta.Errors.Mensagens)
         {
             ModelState.AddModelError(string.Empty, mensagem);
         }

@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace NS.Identidade.API.Controllers;
+namespace NS.WebAPI.CORE.Controllers;
 
 [ApiController]
-public abstract class ControllerBase : Controller
+public abstract class MainController : Controller
 {
     protected ICollection<string> Erros = new List<string>();
 
-    protected ActionResult CustomResponse(object result = null)
+    protected ActionResult CustomResponse(object? result = null)
     {
         if (OperacaoValida())
         {
@@ -25,6 +26,16 @@ public abstract class ControllerBase : Controller
     {
         var erros = modelState.Values.SelectMany(e => e.Errors);
         foreach (ModelError? erro in erros)
+        {
+            AdicionarErroProcessamento(erro.ErrorMessage);
+        }
+
+        return CustomResponse();
+    }
+
+    protected ActionResult CustomResponse(ValidationResult validationResult)
+    {
+        foreach (ValidationFailure? erro in validationResult.Errors)
         {
             AdicionarErroProcessamento(erro.ErrorMessage);
         }

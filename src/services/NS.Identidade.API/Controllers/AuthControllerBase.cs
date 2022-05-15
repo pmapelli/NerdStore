@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using NS.Identidade.API.Models;
 using NS.WebAPI.CORE.Identidade;
+using NS.WebAPI.CORE.Controllers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -9,7 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace NS.Identidade.API.Controllers;
 
-public abstract class AuthControllerBase : ControllerBase
+public abstract class AuthControllerBase : MainController
 {
     private readonly AppSettings _appSettings;
     private readonly UserManager<IdentityUser> _userManager;
@@ -21,13 +22,13 @@ public abstract class AuthControllerBase : ControllerBase
         _appSettings = appSettings.Value;
     }
 
-    protected async Task<UsuarioRespostaLogin> GerarJwt(string email)
+    protected async Task<UsuarioRespostaLogin?> GerarJwt(string email)
     {
         IdentityUser? user = await _userManager.FindByEmailAsync(email);
         var claims = await _userManager.GetClaimsAsync(user);
 
         ClaimsIdentity identityClaims = await ObterClaimsUsuario(claims, user);
-        var encodedToken = CodificarToken(identityClaims);
+        string encodedToken = CodificarToken(identityClaims);
 
         return ObterRespostaToken(encodedToken, user, claims);
     }
@@ -41,7 +42,7 @@ public abstract class AuthControllerBase : ControllerBase
         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
         claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
         claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
-        foreach (var userRole in userRoles)
+        foreach (string? userRole in userRoles)
         {
             claims.Add(new Claim("role", userRole));
         }
@@ -55,7 +56,7 @@ public abstract class AuthControllerBase : ControllerBase
     private string CodificarToken(ClaimsIdentity identityClaims)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+        byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
         SecurityToken? token = tokenHandler.CreateToken(new SecurityTokenDescriptor
         {
             Issuer = _appSettings.Emissor,
@@ -68,7 +69,7 @@ public abstract class AuthControllerBase : ControllerBase
         return tokenHandler.WriteToken(token);
     }
 
-    private UsuarioRespostaLogin ObterRespostaToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
+    private UsuarioRespostaLogin? ObterRespostaToken(string encodedToken, IdentityUser user, IEnumerable<Claim> claims)
     {
         return new UsuarioRespostaLogin
         {

@@ -28,13 +28,13 @@ public class IdentidadeController : IdentidadeControllerBase
     {
         if (!ModelState.IsValid) return View(usuarioRegistro);
 
-        UsuarioRespostaLogin? resposta = await _autenticacaoService.Registro(usuarioRegistro);
+        UsuarioRespostaLogin resposta = await _autenticacaoService.Registro(usuarioRegistro);
 
         if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
 
         await RealizarLogin(resposta);
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Catalogo");
     }
 
     [HttpGet]
