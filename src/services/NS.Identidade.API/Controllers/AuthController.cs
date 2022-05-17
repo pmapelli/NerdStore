@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using NS.MessageBus;
+using Microsoft.AspNetCore.Mvc;
 using NS.Identidade.API.Models;
 using NS.WebAPI.CORE.Identidade;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
+using NS.Core.Messages.Integration;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace NS.Identidade.API.Controllers;
@@ -11,13 +13,16 @@ namespace NS.Identidade.API.Controllers;
 [Route("api/identidade")]
 public class AuthController : AuthControllerBase
 {
+    private readonly IMessageBus _bus;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
 
-    public AuthController(IOptions<AppSettings> appSettings,
+    public AuthController(IMessageBus bus,
+                            IOptions<AppSettings> appSettings,
                             UserManager<IdentityUser> userManager,
                             SignInManager<IdentityUser> signInManager) : base(appSettings, userManager)
     {
+        _bus = bus;
         _userManager = userManager;
         _signInManager = signInManager;
     }
@@ -38,7 +43,13 @@ public class AuthController : AuthControllerBase
 
         if (result.Succeeded)
         {
-            return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+            ResponseMessage clienteResult = await RegistrarCliente(usuarioRegistro);
+
+            if (clienteResult.ValidationResult.IsValid) return CustomResponse(await GerarJwt(usuarioRegistro.Email));
+
+            await _userManager.DeleteAsync(user);
+            return CustomResponse(clienteResult.ValidationResult);
+
         }
 
         foreach (IdentityError? error in result.Errors)
@@ -70,5 +81,23 @@ public class AuthController : AuthControllerBase
 
         AdicionarErroProcessamento("Usuário ou Senha incorretos");
         return CustomResponse();
+    }
+
+    private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
+    {
+        IdentityUser? usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
+
+        var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
+            Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
+
+        try
+        {
+            return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+        }
+        catch
+        {
+            await _userManager.DeleteAsync(usuario);
+            throw;
+        }
     }
 }

@@ -15,6 +15,8 @@ builder.Services.AddApiConfiguration();
 
 builder.Services.AddSwaggerConfiguration();
 
+builder.Services.AddMessageBusConfiguration(builder.Configuration);
+
 WebApplication app = builder.Build();
 
 app.UseSwaggerConfiguration();
